@@ -1120,15 +1120,14 @@ end
 local function showPlayerAccumulativeStatus(inst)
 	if inst.prefab == "wathgrithr" then
 		local killednum = inst.killedNumber or 0
+		killednum = killednum.."/"..(math.floor(inst.levels / 5) + 15)
 		local harmnum = inst.causeHarm or 0
-		local buffstatus = "false"
+		harmnum = harmnum.."/"..(2500 + math.floor(inst.levels / 5) * 200)
+		local buffstatus = "off"
 		if inst.buffOn then
-			buffstatus = "true"
+			buffstatus = "on"
 		end
-		local bufflefttime = 0
-		if inst.buffMaxTime and inst.buffTime then
-			bufflefttime = inst.buffMaxTime - inst.buffTime
-		end
+		local bufflefttime = (inst.buffMaxTime - inst.buffTime) or 0
 		local status_string = "kill numbers : "..killednum.."\nharm amounts : "..harmnum.."\nbuff status : "..buffstatus.."\nbuff left time : "..bufflefttime.."\n"
 		if inst.components.talker then
 			inst.components.talker:Say(status_string, 5)
